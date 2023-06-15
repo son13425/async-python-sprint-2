@@ -1,15 +1,15 @@
 from functools import wraps
-from typing import Callable, Generator, Optional, Any
+from app.loggs.logger import logger
 
 
-def coroutine(func: Callable) -> Generator[Optional[Any], None, None]:
-    """Декоратор инициализирует генератор"""
-    @wraps(func)
-    def wrap(
-        *args: Any,
-        **kwargs: Any
-    ) -> Generator[Optional[Any], None, None]:
-        generator = func(*args, **kwargs)
-        generator.send(None)
-        return generator
-    return wrap()
+def coroutine(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        try:
+            gen = f(*args, **kwargs)
+            gen.send(None)
+            return gen
+        except StopIteration:
+            logger.error('Генератор не создан')
+
+    return wrap

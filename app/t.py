@@ -49,11 +49,11 @@ def print_x(num: int, name: str) -> Generator[None, None, None]:
 
 if __name__ == '__main__':
     job1 = Job(target=print_x, args=(2, 'Два'))
-    job2 = Job(target=print_x, args=(3, 'Три'))
-    job3 = Job(target=print_x, args=(4, 'Четыре'))
+    # job2 = Job(target=print_x, args=(3, 'Три'))
+    # job3 = Job(target=print_x, args=(4, 'Четыре'))
 
-    loop = JobLoop()
-    loop.add_job(job1)
-    loop.add_job(job2)
-    loop.add_job(job3)
-    loop.run()
+    # loop = JobLoop()
+    # loop.add_job(job1)
+    # # loop.add_job(job2)
+    # # loop.add_job(job3)
+    # loop.run()
