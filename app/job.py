@@ -1,4 +1,5 @@
 from uuid import uuid4
+import time
 from datetime import datetime
 from typing import Optional, List, Callable
 
@@ -29,8 +30,8 @@ class Job:
     def run(self) -> None:
         self.__coroutine.send(None)
 
-    def pause(self):
-        pass
+    def pause(self, time_pause: int):
+        time.sleep(time_pause)
 
     def stop(self):
         pass

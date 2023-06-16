@@ -19,6 +19,7 @@ class WorkingFiles():
     def file_create(self, file_name: str, file_type: str) -> None:
         """Создание файла"""
         yield
+        time.sleep(20)
         OUTPUT_FILES_DIR.mkdir(exist_ok=True)
         now = dt.datetime.now()
         now_formatted = now.strftime(DATETIME_FORMAT)
@@ -36,7 +37,8 @@ class WorkingFiles():
         time.sleep(5)
         if os.path.exists(file_url):
             with open(file_url, encoding='utf-8') as file:
-                file.readline()
+                text = file.readline()
+                print(text)
         else:
             logger.error(f'Файл данных запроса ({file_url}) не найден')
             return None

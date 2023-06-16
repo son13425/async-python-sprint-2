@@ -1,6 +1,7 @@
 from functools import wraps
 from queue import Queue
 from typing import Any, Generator, Callable
+from datetime import datetime as dt
 
 
 def coroutine(f):
@@ -57,3 +58,8 @@ if __name__ == '__main__':
     # # loop.add_job(job2)
     # # loop.add_job(job3)
     # loop.run()
+
+from time import perf_counter
+print(perf_counter())
+print(perf_counter() + 60)
+print(all([]))
