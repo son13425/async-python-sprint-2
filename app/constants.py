@@ -22,10 +22,19 @@ FILE_FOR_READ = WORKING_FILES_DIR / NAME_FILE_FOR_READ
 # имя файл для вывода
 NAME_FILE_FOR_OUTPUT = 'output_file'
 
-
 # формат сообщений логгера
 FORMAT_LOGGER = (
     '%(asctime)s | %(name)s | %(levelname)s | %(message)s'
 )
 # адрес файла вывода логов
 FILE_LOGGER = BASE_DIR / 'loggs' / 'application-log.log'
+
+# адрес файла журнала статусов работ
+FILE_STATUS_LOG = BASE_DIR / 'log_status' / 'log_status.json'
+
+# имена для работы с файловой системой
+DIR_NAME_FIRST = 'folder'
+DIR_NAME_RENAME = 'new_folder'
+
+# url для парсинга
+URL_FOR_PARSING = 'https://code.s3.yandex.net/async-module/moscow-response.json'

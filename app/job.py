@@ -17,9 +17,9 @@ class Job:
         tries: int = 0,                           # количество рестартов
         dependencies: Optional[List[str]] = None  # зависимости
     ) -> None:
-        self.__args = args or ()
-        self.__kwargs = kwargs or {}
-        self.__coroutine = target(*self.__args, **self.__kwargs)
+        self.args = args or ()
+        self.kwargs = kwargs or {}
+        self.coroutine = target(*self.args, **self.kwargs)
         self.job_uid = job_uid if job_uid else uuid4().hex
         self.target = target
         self.start_at = start_at
@@ -28,7 +28,7 @@ class Job:
         self.dependencies = dependencies
 
     def run(self) -> None:
-        self.__coroutine.send(None)
+        self.coroutine.send(self.job_uid)
 
     def pause(self, time_pause: int):
         time.sleep(time_pause)

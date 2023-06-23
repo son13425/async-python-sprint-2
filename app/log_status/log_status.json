@@ -1,0 +1,36 @@
+[
+    {
+        "job_uid": "44faa985a530430b9dff8afc50be8282",
+        "info_job": {
+            "target": "file_read",
+            "args": "(PosixPath('/home/shirokova/\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b/hlam/async-python-sprint-2/app/external/example_text_file.txt'),)",
+            "kwargs": "{}",
+            "start_at": 31444.368003105,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "2aefd1d6420243f5a4436f53e83fff4c",
+        "info_job": {
+            "target": "file_create",
+            "args": "('ddd', 'json')",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": 5,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "IN_PROGRESS",
+            "current_tries": 1
+        }
+    }
+]
+    }
+]

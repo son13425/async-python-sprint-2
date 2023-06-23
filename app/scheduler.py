@@ -1,14 +1,16 @@
 from queue import Queue
-from datetime import datetime as dt
-from threading import Timer, Condition, Thread
+from threading import Condition, Thread
 from typing import List
 from app.job import Job
 from app.loggs.logger import logger
 from time import perf_counter
+from app.log_status.log_status import overwrite_job_status
+from threading import Lock
 
 
 condition = Condition()
 work_list = []
+lock = Lock()
 
 
 class Scheduler:
@@ -18,11 +20,15 @@ class Scheduler:
         self.pool_size: int = pool_size
 
     def schedule(self, task: Job) -> None:
+        with lock:
+            overwrite_job_status(task.job_uid, 'START')
         Thread(target=self.is_time, args=(task, condition, work_list)).start()
         with condition:
             condition.wait_for(lambda: len(work_list) == 1)
             if all(work_list):
                 self.__queue.put(task)
+                with lock:
+                    overwrite_job_status(task.job_uid, 'IN_QUEUE')
                 logger.info(
                     f'Задача {task.job_uid} - "{task.target.__doc__}" '
                     'отправлена в очередь'
@@ -36,15 +42,12 @@ class Scheduler:
                 f'Задача {job.job_uid} - "{job.target.__doc__}" '
                 'получена из очереди'
             )
+            with lock:
+                overwrite_job_status(job.job_uid, 'IN_PROGRESS')
             try:
                 job.run()
-
             except StopIteration:
                 continue
-            finally:
-                logger.info(
-                    f'Задача {job.job_uid} - "{job.target.__doc__}" выполнена'
-                )
 
     def restart(self):
         pass
@@ -52,7 +55,9 @@ class Scheduler:
     def stop(self):
         pass
 
-    def is_time(self, task: Job, condition: Condition, work_list: List) -> None:
+    def is_time(
+            self, task: Job, condition: Condition, work_list: List
+    ) -> None:
         with condition:
             time_current = perf_counter()
             if task.start_at is not None and time_current > task.start_at:
@@ -72,10 +77,14 @@ class Scheduler:
                     work_list.append(True)
             condition.notify()
 
-    def time_is_up(self, task: Job, condition: Condition, work_list: List) -> None:
+    def time_is_up(
+        self, task: Job, condition: Condition, work_list: List
+    ) -> None:
         with condition:
             pass
 
-    def is_tries(self, task: Job, condition: Condition, work_list: List) -> None:
+    def is_tries(
+        self, task: Job, condition: Condition, work_list: List
+    ) -> None:
         with condition:
             pass

@@ -56,3 +56,30 @@ s.intro()
 
 # Запуск intro():
 # I shout!
+
+
+ from threading import Timer
+ import datetime
+ import random
+
+
+def f():
+    print("Executing f1 at", datetime.datetime.now().time())
+    result = f2()
+    timer = Timer(5, f3)
+    timer.start()
+    if(result > 5):
+        print("Cancelling f3 since f2 resulted in", result)
+        timer.cancel()
+
+
+def f2():
+    print("Executing f2 at", datetime.datetime.now().time())
+    return random.randint(1, 10)
+
+
+def f3():
+    print("Executing f3 at", datetime.datetime.now().time())
+
+
+f()
