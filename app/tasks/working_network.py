@@ -8,11 +8,7 @@ from app.constants import (
     OUTPUT_FILES_DIR
 )
 import datetime as dt
-from threading import Lock
-from app.log_status.log_status import overwrite_job_status
-
-
-lock = Lock()
+from app.log_status.log_status import record_status_log
 
 
 class WorkingNetwork():
@@ -30,6 +26,10 @@ class WorkingNetwork():
                     try:
                         data = json.loads(resp_body)
                     except Exception:
+                        record_status_log.overwrite_job_status(
+                            job_uid,
+                            'ABORTED'
+                        )
                         logger.error(
                             f'Задача {job_uid} - Этап '
                             f'"{self.get_request.__doc__}" прервана: '
@@ -43,6 +43,10 @@ class WorkingNetwork():
                     output.send((job_uid, data))
                     output.close()
             else:
+                record_status_log.overwrite_job_status(
+                    job_uid,
+                    'ABORTED'
+                )
                 logger.error(
                     f'Задача {job_uid} - Этап "{self.get_request.__doc__}" '
                     f'прервана: задан некорректный адрес {url}'
@@ -54,6 +58,10 @@ class WorkingNetwork():
         output = self.record_item()
         job_uid, data = yield
         if not data:
+            record_status_log.overwrite_job_status(
+                job_uid,
+                'ABORTED'
+            )
             logger.error(
                 f'Задача {job_uid} - Этап '
                 f'"{self.analyze_data.__doc__}" прервана: '
@@ -76,6 +84,10 @@ class WorkingNetwork():
         """Запись результатов парсинга в файл"""
         job_uid, data = yield
         if not data:
+            record_status_log.overwrite_job_status(
+                job_uid,
+                'ABORTED'
+            )
             logger.error(
                 f'Задача {job_uid} - Этап '
                 f'"{self.record_item.__doc__}" прервана: '
@@ -90,13 +102,12 @@ class WorkingNetwork():
             file_path = OUTPUT_FILES_DIR / file_name
             with open(file_path, 'w', encoding='utf-8') as file:
                 json.dump(data, file, indent=4)
+            record_status_log.overwrite_job_status(job_uid, 'END')
             logger.info(
                 f'Задача {job_uid} - Этап '
                 f'"{self.record_item.__doc__}" выполнена. '
                 f'Данные записаны в файл {file_path}'
             )
-            with lock:
-                overwrite_job_status(job_uid, 'END')
         except GeneratorExit:
             pass
 

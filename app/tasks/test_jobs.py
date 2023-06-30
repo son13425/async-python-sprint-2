@@ -34,10 +34,10 @@ job5 = Job(
     target=work_file_system.dir_rename,
     args=(DIR_NAME_FIRST, DIR_NAME_RENAME, ),
 )
-job6 = Job(
-    target=work_file_system.dir_delete,
-    args=(DIR_NAME_RENAME, ),
-)
+# job6 = Job(
+#     target=work_file_system.dir_delete,
+#     args=(DIR_NAME_RENAME, ),
+# )
 job7 = Job(
     target=working_network.get_request,
     args=(URL_FOR_PARSING, ),
@@ -48,4 +48,4 @@ job8 = Job(
 )
 
 
-list_jobs = [job1, job2, job3, job4, job5, job6, job7, job8]
+list_jobs = [job1, job2, job3, job4, job5, job7, job8]

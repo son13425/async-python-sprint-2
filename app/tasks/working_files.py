@@ -10,11 +10,7 @@ from app.constants import (
 )
 from app.loggs.logger import logger
 from app.utils.decorator import coroutine
-from threading import Lock
-from app.log_status.log_status import overwrite_job_status
-
-
-lock = Lock()
+from app.log_status.log_status import record_status_log
 
 
 class WorkingFiles():
@@ -32,12 +28,15 @@ class WorkingFiles():
             with open(file_url, encoding='utf-8') as file:
                 text = file.readline()
                 print(text)
-                logger.info(
-                    f'Задача {job_uid} - "{self.file_read.__doc__}" выполнена'
-                )
-            with lock:
-                overwrite_job_status(job_uid, 'END')
+            record_status_log.overwrite_job_status(job_uid, 'END')
+            logger.info(
+                f'Задача {job_uid} - "{self.file_read.__doc__}" выполнена'
+            )
         else:
+            record_status_log.overwrite_job_status(
+                job_uid,
+                'ABORTED'
+            )
             logger.error(
                 f'Задача {job_uid} - "{self.file_read.__doc__}" '
                 f'прервана: файл для запроса ({file_url}) не найден'
@@ -55,11 +54,10 @@ class WorkingFiles():
         file_path = OUTPUT_FILES_DIR / file_name
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(text + '\n')
+        record_status_log.overwrite_job_status(job_uid, 'END')
         logger.info(
             f'Задача {job_uid} - "{self.file_output.__doc__}" выполнена'
         )
-        with lock:
-            overwrite_job_status(job_uid, 'END')
 
 
 working_file = WorkingFiles()
