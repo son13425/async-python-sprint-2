@@ -37,4 +37,12 @@ DIR_NAME_FIRST = 'folder'
 DIR_NAME_RENAME = 'new_folder'
 
 # url для парсинга
-URL_FOR_PARSING = 'https://code.s3.yandex.net/async-module/moscow-response.json'
+URL_FOR_PARSING = (
+    'https://code.s3.yandex.net/async-module/moscow-response.json'
+)
+
+# данные для задачи с зависимостями
+DIR_NAME_DEPENDENCIES = 'dependencies'
+FILE_NAME_DEPENDENT = 'dependent.txt'
+URL_DEPENDENT = BASE_DIR / DIR_NAME_DEPENDENCIES / FILE_NAME_DEPENDENT
+TEXT_DEPENDENT = 'Задача с зависимостями успешно выполнена!'

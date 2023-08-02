@@ -1,0 +1,162 @@
+[
+    {
+        "job_uid": "c659d091900642b0ac10be39b8c36687",
+        "info_job": {
+            "target": "file_read",
+            "args": "(PosixPath('/home/user/\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b/Dev/aps2/async-python-sprint-2/app/external/example_text_file.txt'),)",
+            "kwargs": "{}",
+            "start_at": 13289.341660796,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "9cc04d3991f3418cb01d7d707f664a9c",
+        "info_job": {
+            "target": "file_create",
+            "args": "('ddd', 'json')",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": 5,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "b91d885c1e2f41e9bcaf61511a3547de",
+        "info_job": {
+            "target": "file_output",
+            "args": "('\u041f\u0440\u0438\u0432\u0435\u0442!', 'kkkk', 'json')",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "c29a320f95bf4e7792d77475eb1b7710",
+        "info_job": {
+            "target": "dir_create",
+            "args": "('folder',)",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "a35db7898dc046c988813581a904d091",
+        "info_job": {
+            "target": "dir_rename",
+            "args": "('folder', 'new_folder')",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "ABORTED",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "cb744441e955448ca4a92c86fba4324e",
+        "info_job": {
+            "target": "dir_delete",
+            "args": "('new_folder',)",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "9340879a31744b84b798b549264578f3",
+        "info_job": {
+            "target": "get_request",
+            "args": "('https://code.s3.yandex.net/async-module/moscow-response.json',)",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "b8744fbb7cd3467fa930a82473b2105a",
+        "info_job": {
+            "target": "file_delete",
+            "args": "(PosixPath('/home/user/\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b/Dev/aps2/async-python-sprint-2/app/external/outputs/ddd.json'),)",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "7b3ca98f70354c1a8cf2643199a0501c",
+        "info_job": {
+            "target": "file_read",
+            "args": "(PosixPath('/home/user/\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b/Dev/aps2/async-python-sprint-2/app/external/example_text_file.txt'),)",
+            "kwargs": "{}",
+            "start_at": 2925.986155571,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "c2f535a8ad50420eade7150324aec28b",
+        "info_job": {
+            "target": "file_read",
+            "args": "(PosixPath('/home/user/\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u044b/Dev/aps2/async-python-sprint-2/app/external/example_text_file.txt'),)",
+            "kwargs": "{}",
+            "start_at": 9635.559738792,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": null
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    }
+]

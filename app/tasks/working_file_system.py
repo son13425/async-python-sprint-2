@@ -34,6 +34,7 @@ class WorkingFileSystem():
                 f'Задача {job_uid} - "{self.dir_create.__doc__} {dir_name}" '
                 'выполнена'
             )
+        return True
 
     @coroutine
     def dir_rename(self, dir_name: str, new_dir_name: str):

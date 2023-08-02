@@ -69,12 +69,12 @@ class RecordStatusLog:
         self.lock.acquire()
         with open(FILE_STATUS_LOG, 'r+', encoding='utf-8') as file:
             data = json.load(file)
-            file.seek(0)
             for job in data:
                 if job['job_uid'] == job_uid:
                     job['info_status']['current_tries'] += 1
-        print('b=', data)
-        json.dump(data, file, indent=4)
+            file.seek(0)
+            json.dump(data, file, indent=4)
+            file.truncate()
         self.lock.release()
 
     def converting_job_to_dict(self, job: Job):

@@ -1,5 +1,8 @@
 from app.job import Job
-from app.tasks.working_files import working_file
+from app.tasks.working_files import (
+    working_file,
+    file_output_dependencies
+)
 from app.tasks.working_file_system import work_file_system
 from app.tasks.working_network import working_network
 from time import perf_counter
@@ -8,7 +11,10 @@ from app.constants import (
     DIR_NAME_RENAME,
     FILE_FOR_READ,
     URL_FOR_PARSING,
-    OUTPUT_FILES_DIR
+    OUTPUT_FILES_DIR,
+    TEXT_DEPENDENT,
+    DIR_NAME_DEPENDENCIES,
+    URL_DEPENDENT
 )
 
 
@@ -34,10 +40,10 @@ job5 = Job(
     target=work_file_system.dir_rename,
     args=(DIR_NAME_FIRST, DIR_NAME_RENAME, ),
 )
-# job6 = Job(
-#     target=work_file_system.dir_delete,
-#     args=(DIR_NAME_RENAME, ),
-# )
+job6 = Job(
+    target=work_file_system.dir_delete,
+    args=(DIR_NAME_RENAME, ),
+)
 job7 = Job(
     target=working_network.get_request,
     args=(URL_FOR_PARSING, ),
@@ -46,6 +52,12 @@ job8 = Job(
     target=work_file_system.file_delete,
     args=(OUTPUT_FILES_DIR / 'ddd.json', ),
 )
+job9 = Job(
+    target=working_file.file_output_dependencies,
+    args=(TEXT_DEPENDENT, ),
+    dependencies=[
+        f'work_file_system.dir_create({DIR_NAME_DEPENDENCIES})',
+        f'working_file.file_create({URL_DEPENDENT})']
+)
 
-
-list_jobs = [job1, job2, job3, job4, job5, job7, job8]
+list_jobs = [job1, job2, job3, job4, job5, job6, job7, job8, job9]
