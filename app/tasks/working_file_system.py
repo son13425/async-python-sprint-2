@@ -8,13 +8,14 @@ from app.constants import (
     OUTPUT_FILES_DIR
 )
 from app.log_status.log_status import record_status_log
+from typing import Any, Generator
 
 
 class WorkingFileSystem():
     """Работа с файловой системой"""
 
     @coroutine
-    def dir_create(self, dir_name: str):
+    def dir_create(self, dir_name: str) -> Generator[None, Any, Any]:
         """Создание директории"""
         job_uid = yield
         if os.path.exists(BASE_DIR / dir_name):
@@ -37,7 +38,7 @@ class WorkingFileSystem():
         return True
 
     @coroutine
-    def dir_rename(self, dir_name: str, new_dir_name: str):
+    def dir_rename(self, dir_name: str, new_dir_name: str) -> Generator[None, Any, Any]:
         """Переименование директории"""
         job_uid = yield
         time.sleep(5)
@@ -62,7 +63,7 @@ class WorkingFileSystem():
             )
 
     @coroutine
-    def dir_delete(self, dir_name: str):
+    def dir_delete(self, dir_name: str) -> Generator[None, Any, Any]:
         """Удаление директории"""
         job_uid = yield
         time.sleep(5)
@@ -85,7 +86,7 @@ class WorkingFileSystem():
             )
 
     @coroutine
-    def file_create(self, name: str, file_type: str) -> None:
+    def file_create(self, name: str, file_type: str) -> Generator[None, Any, Any]:
         """Создание файла"""
         job_uid = yield
         time.sleep(20)
@@ -100,7 +101,7 @@ class WorkingFileSystem():
         )
 
     @coroutine
-    def file_delete(self, file_url: Path) -> None:
+    def file_delete(self, file_url: Path) -> Generator[None, Any, Any]:
         """Удаление файла"""
         job_uid = yield
         if os.path.exists(file_url):

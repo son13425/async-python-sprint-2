@@ -23,7 +23,7 @@ class RecordStatusLog:
                 "start_at": task.start_at,
                 "max_working_time": task.max_working_time,
                 "tries": task.tries,
-                "dependencies": task.dependencies
+                "dependencies": str(task.dependencies)
             },
             "info_status": {
                 "status": "CREATED",
@@ -44,6 +44,13 @@ class RecordStatusLog:
                 json.dump(data, file, indent=4)
                 file.write('\n' + ']')
         self.lock.release()
+
+    def read_status_log(self):
+        self.lock.acquire()
+        with open(FILE_STATUS_LOG, 'r', encoding='utf-8') as file:
+            status_log = json.load(file)
+        self.lock.release()
+        return status_log
 
     def overwrite_job_status(self, job_uid: str, new_status: str):
         """
@@ -89,7 +96,7 @@ class RecordStatusLog:
             "start_at": job.start_at,
             "max_working_time": job.max_working_time,
             "tries": job.tries,
-            "dependencies": job.dependencies
+            "dependencies": str(job.dependencies)
         }
         return data
 

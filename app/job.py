@@ -9,13 +9,13 @@ class Job:
     def __init__(
         self,
         target: Callable,
-        args: tuple = None,
-        kwargs: dict = None,
+        args: tuple = None, # type: ignore
+        kwargs: dict = None, # type: ignore
         job_uid: Optional[str] = None,
         start_at: Optional[datetime] = None,      # время запуска
         max_working_time: int = -1,               # длительность выполнения
         tries: int = 0,                           # количество рестартов
-        dependencies: Optional[List[str]] = None  # зависимости
+        dependencies: Optional[List] = []         # зависимости
     ) -> None:
         self.args = args or ()
         self.kwargs = kwargs or {}

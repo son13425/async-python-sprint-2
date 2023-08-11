@@ -9,13 +9,14 @@ from app.constants import (
 )
 import datetime as dt
 from app.log_status.log_status import record_status_log
+from typing import Any, Generator
 
 
 class WorkingNetwork():
     """Работа с сетью"""
 
     @coroutine
-    def get_request(self, url: str) -> str:
+    def get_request(self, url: str) -> Generator[None, Any, Any]:
         """Get-запрос"""
         output = self.analyze_data()
         job_uid = yield
@@ -40,7 +41,7 @@ class WorkingNetwork():
                         f'"{self.get_request.__doc__}" выполнена. '
                         'Данные отправлены на обработку'
                     )
-                    output.send((job_uid, data))
+                    output.send((job_uid, data)) # type: ignore
                     output.close()
             else:
                 record_status_log.overwrite_job_status(
@@ -53,7 +54,7 @@ class WorkingNetwork():
                 )
 
     @coroutine
-    def analyze_data(self):
+    def analyze_data(self) -> Generator[None, Any, Any]:
         """Анализ данных парсинга"""
         output = self.record_item()
         job_uid, data = yield
@@ -80,7 +81,7 @@ class WorkingNetwork():
             pass
 
     @coroutine
-    def record_item(self):
+    def record_item(self) -> Generator[None, Any, Any]:
         """Запись результатов парсинга в файл"""
         job_uid, data = yield
         if not data:

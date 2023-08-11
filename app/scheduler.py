@@ -8,6 +8,7 @@ from app.log_status.log_status import record_status_log
 import concurrent.futures as pool
 from app.constants import FILE_STATUS_LOG
 import json
+from threading import Lock
 
 
 class Scheduler:
@@ -16,7 +17,7 @@ class Scheduler:
         self.__queue: Queue[Job] = Queue()
         self.pool_size: int = pool_size
 
-    def schedule(self, task: Job) -> None:
+    def schedule(self, task: Job) -> bool:
         record_status_log.overwrite_job_status(task.job_uid, 'START')
         condition = Condition()
         work_list = []
@@ -37,6 +38,7 @@ class Scheduler:
                 'отправлена в очередь'
             )
         self.run()
+        return True
 
     def run(self) -> None:
         while not self.__queue.empty():
@@ -46,7 +48,7 @@ class Scheduler:
                 'получена из очереди'
             )
             record_status_log.overwrite_job_status(job.job_uid, 'IN_PROGRESS')
-            if job.dependencies is None:
+            if len(job.dependencies) == 0: # type: ignore
                 try:
                     job.run()
                 except StopIteration:
@@ -60,7 +62,7 @@ class Scheduler:
                 ).start()
                 with condition:
                     condition.wait_for(
-                        lambda: len(dependencies_list) == len(job.dependencies)
+                        lambda: len(dependencies_list) == len(job.dependencies) # type: ignore
                     )
                     if all(dependencies_list):
                         try:
@@ -75,6 +77,7 @@ class Scheduler:
                         self.restart(job)
 
     def restart(self, task: Job):
+        Lock().acquire()
         with open(FILE_STATUS_LOG, 'r+', encoding='utf-8') as file:
             data = json.load(file)
         for job in data:
@@ -82,6 +85,7 @@ class Scheduler:
                 if job['info_status']['current_tries'] < (
                     job['info_job']['tries']
                 ):
+                    Lock().release()
                     self.schedule(task)
                     record_status_log.overwrite_job_restart(task.job_uid)
                     logger.info(
@@ -89,6 +93,7 @@ class Scheduler:
                         'рестарт'
                     )
                 else:
+                    Lock().release()
                     record_status_log.overwrite_job_status(
                         task.job_uid,
                         'ABORTED'
@@ -100,6 +105,7 @@ class Scheduler:
                         'рестартов'
                     )
             else:
+                Lock().release()
                 continue
 
     def stop(self):
@@ -111,7 +117,7 @@ class Scheduler:
         time_current = perf_counter()
         if task.start_at is None:
             work_list.append(True)
-        elif task.start_at is not None and time_current > task.start_at:
+        elif task.start_at is not None and time_current > task.start_at: # type: ignore
             record_status_log.overwrite_job_status(
                 task.job_uid,
                 'ABORTED'
@@ -122,8 +128,8 @@ class Scheduler:
             )
             work_list.append(False)
         else:
-            if task.start_at is not None and time_current < task.start_at:
-                time_pause = round(task.start_at - time_current, 0)
+            if task.start_at is not None and time_current < task.start_at: # type: ignore
+                time_pause = round(task.start_at - time_current, 0) # type: ignore
                 record_status_log.overwrite_job_status(
                     task.job_uid,
                     'PAUSE'
@@ -140,12 +146,14 @@ class Scheduler:
     def is_dependencies(
         self, task: Job, condition: Condition, dependencies_list: list
     ) -> None:
+        for job in task.dependencies: # type: ignore
+            record_status_log.record_job_status_log(job)
         with condition:
             with pool.ThreadPoolExecutor(
                 max_workers=self.pool_size
             ) as executor:
                 futures = (
-                    [executor.submit(worker, ) for worker in task.dependencies]
+                    [executor.submit(self.schedule, work) for work in task.dependencies] # type: ignore
                 )
                 for future in pool.as_completed(futures):
                     result = future.result()

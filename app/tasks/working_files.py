@@ -18,21 +18,21 @@ class WorkingFiles():
     """Работа с файлами"""
 
     @coroutine
-    def file_create(self, file_path: Path) -> None:
+    def file_create(self, file_path: Path) -> Generator[None, Any, Any]:
         """Создание файла"""
         job_uid = yield
         file_path.touch(exist_ok=True)
+        record_status_log.overwrite_job_status(job_uid, 'END')
         logger.info(
             f'Задача {job_uid} - "Зависимость "{self.file_create.__doc__}" '
             'выполнена'
         )
-        return True
 
     @coroutine
     def file_read(
         self,
         file_url: Path
-    ) -> Optional[Generator[Optional[Any], None, None]]:
+    ) -> Generator[None, Any, Any]:
         """Чтeние файла"""
         job_uid = yield
         time.sleep(5)
@@ -52,10 +52,14 @@ class WorkingFiles():
                 f'Задача {job_uid} - "{self.file_read.__doc__}" '
                 f'прервана: файл для запроса ({file_url}) не найден'
             )
-            return None
 
     @coroutine
-    def file_output(self, text: str, file_name: str, file_type: str) -> None:
+    def file_output(
+        self,
+        text: str,
+        file_name: str,
+        file_type: str
+    ) -> Generator[None, Any, Any]:
         """Вывод информации в текстовый файл"""
         job_uid = yield
         OUTPUT_FILES_DIR.mkdir(exist_ok=True)
@@ -71,9 +75,9 @@ class WorkingFiles():
         )
 
     @coroutine
-    def file_output_dependencies(self, text: str) -> None:
+    def file_output_dependencies(self, text: str) -> Generator[None, Any, Any]:
         """Вывод информации о зависимостях в файл"""
-        job_uid = yield
+        job_uid = yield # type: ignore
         file_path = URL_DEPENDENT
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(text + '\n')

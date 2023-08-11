@@ -1,7 +1,6 @@
 from app.job import Job
 from app.tasks.working_files import (
-    working_file,
-    file_output_dependencies
+    working_file
 )
 from app.tasks.working_file_system import work_file_system
 from app.tasks.working_network import working_network
@@ -16,12 +15,13 @@ from app.constants import (
     DIR_NAME_DEPENDENCIES,
     URL_DEPENDENT
 )
+import datetime
 
 
 job1 = Job(
     target=working_file.file_read,
     args=(FILE_FOR_READ, ),
-    start_at=perf_counter() + 30
+    start_at=perf_counter() + 30 # type: ignore
 )
 job2 = Job(
     target=work_file_system.file_create,
@@ -53,11 +53,17 @@ job8 = Job(
     args=(OUTPUT_FILES_DIR / 'ddd.json', ),
 )
 job9 = Job(
+    target=work_file_system.dir_create,
+    args=(DIR_NAME_DEPENDENCIES, ),
+)
+job10 = Job(
+    target=working_file.file_create,
+    args=(URL_DEPENDENT, )
+)
+job11 = Job(
     target=working_file.file_output_dependencies,
     args=(TEXT_DEPENDENT, ),
-    dependencies=[
-        f'work_file_system.dir_create({DIR_NAME_DEPENDENCIES})',
-        f'working_file.file_create({URL_DEPENDENT})']
+    dependencies=[job9, job10]
 )
 
-list_jobs = [job1, job2, job3, job4, job5, job6, job7, job8, job9]
+list_jobs = [job1, job2, job3, job2, job4, job5, job6, job7, job8, job11, job2]
