@@ -66,4 +66,7 @@ job11 = Job(
     dependencies=[job9, job10]
 )
 
-list_jobs = [job1, job2, job3, job2, job4, job5, job6, job7, job8, job11, job2]
+list_jobs = [job11]
+
+
+# job2, job3, job4, job5, job6, job7, job8,

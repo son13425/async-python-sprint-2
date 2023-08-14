@@ -8,7 +8,6 @@ from app.log_status.log_status import record_status_log
 import concurrent.futures as pool
 from app.constants import FILE_STATUS_LOG
 import json
-from threading import Lock
 
 
 class Scheduler:
@@ -77,15 +76,12 @@ class Scheduler:
                         self.restart(job)
 
     def restart(self, task: Job):
-        Lock().acquire()
-        with open(FILE_STATUS_LOG, 'r+', encoding='utf-8') as file:
-            data = json.load(file)
+        data = record_status_log.read_status_log()
         for job in data:
             if job['job_uid'] == task.job_uid:
                 if job['info_status']['current_tries'] < (
                     job['info_job']['tries']
                 ):
-                    Lock().release()
                     self.schedule(task)
                     record_status_log.overwrite_job_restart(task.job_uid)
                     logger.info(
@@ -93,7 +89,6 @@ class Scheduler:
                         'рестарт'
                     )
                 else:
-                    Lock().release()
                     record_status_log.overwrite_job_status(
                         task.job_uid,
                         'ABORTED'
@@ -105,11 +100,7 @@ class Scheduler:
                         'рестартов'
                     )
             else:
-                Lock().release()
                 continue
-
-    def stop(self):
-        pass
 
     def is_time(
             self, task: Job, condition: Condition, work_list: List

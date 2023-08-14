@@ -83,7 +83,7 @@ class WorkingFiles():
             file.write(text + '\n')
         record_status_log.overwrite_job_status(job_uid, 'END')
         logger.info(
-            f'Задача {job_uid} - "{self.file_output.__doc__}" выполнена'
+            f'Задача {job_uid} - "{self.file_output_dependencies.__doc__}" выполнена'
         )
 
 
