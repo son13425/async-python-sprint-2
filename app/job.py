@@ -32,6 +32,3 @@ class Job:
 
     def pause(self, time_pause: int):
         time.sleep(time_pause)
-
-    def stop(self):
-        pass

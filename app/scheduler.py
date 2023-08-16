@@ -1,5 +1,5 @@
 from queue import Queue
-from threading import Condition, Thread
+from threading import Condition, Thread, Timer, Event
 from typing import List
 from app.job import Job
 from app.loggs.logger import logger
@@ -7,7 +7,9 @@ from time import perf_counter
 from app.log_status.log_status import record_status_log
 import concurrent.futures as pool
 from app.constants import FILE_STATUS_LOG
-import json
+from concurrent.futures import ThreadPoolExecutor
+from time import sleep
+from multiprocessing import Process
 
 
 class Scheduler:
@@ -47,11 +49,32 @@ class Scheduler:
                 'получена из очереди'
             )
             record_status_log.overwrite_job_status(job.job_uid, 'IN_PROGRESS')
+            with ThreadPoolExecutor(max_workers=self.pool_size) as pool:
+                if job.max_working_time == -1:
+                    pool.submit(self.work, job)
+                else:
+                    process = Process(target=self.work, args=(job, ))
+                    process.start()
+                    sleep(job.max_working_time)
+                    if process.is_alive():
+                        #print(process.is_alive())
+                        process.terminate()
+                        # record_status_log.overwrite_job_status(
+                        #     job.job_uid,
+                        #     'ABORTED'
+                        # )
+                        # logger.error(
+                        #     f'Задача {job.job_uid} - '
+                        #     f'"{job.target.__doc__}" прервана: '
+                        #     'время выполнения задачи истекло'
+                        # )
+
+    def work(self, job: Job):
             if len(job.dependencies) == 0: # type: ignore
                 try:
                     job.run()
                 except StopIteration:
-                    continue
+                    return
             else:
                 condition = Condition()
                 dependencies_list = []
@@ -67,7 +90,7 @@ class Scheduler:
                         try:
                             job.run()
                         except StopIteration:
-                            continue
+                            return
                     else:
                         record_status_log.overwrite_job_status(
                             job.job_uid,
@@ -150,9 +173,3 @@ class Scheduler:
                     result = future.result()
                     dependencies_list.append(result)
             condition.notify()
-
-    def time_is_up(
-        self, task: Job, condition: Condition, work_list: List
-    ) -> None:
-        with condition:
-            pass

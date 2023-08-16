@@ -26,7 +26,7 @@ job1 = Job(
 job2 = Job(
     target=work_file_system.file_create,
     args=('ddd', 'json'),
-    max_working_time=5
+    max_working_time=20
 )
 job3 = Job(
     target=working_file.file_output,
@@ -66,7 +66,7 @@ job11 = Job(
     dependencies=[job9, job10]
 )
 
-list_jobs = [job11]
+list_jobs = [job1, job2, job3, job4, job5, job6, job7, job8, job11]
 
 
 # job2, job3, job4, job5, job6, job7, job8,

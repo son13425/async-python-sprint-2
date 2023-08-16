@@ -1,27 +1,11 @@
 [
     {
-        "job_uid": "af693a9b102445b7a210e865cf96cfb6",
+        "job_uid": "ebae7abdaa89433fa54b4d9a05c00322",
         "info_job": {
-            "target": "file_output_dependencies",
-            "args": "('\u0417\u0430\u0434\u0430\u0447\u0430 \u0441 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u044f\u043c\u0438 \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0430!',)",
+            "target": "file_read",
+            "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/external/example_text_file.txt'),)",
             "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[<app.job.Job object at 0x7f288a1a7100>, <app.job.Job object at 0x7f288a1a6ec0>]"
-        },
-        "info_status": {
-            "status": "END",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "f90bc1853ef04e60a041f0c820e45ecc",
-        "info_job": {
-            "target": "dir_create",
-            "args": "('dependencies',)",
-            "kwargs": "{}",
-            "start_at": null,
+            "start_at": 17875.846905751,
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -32,10 +16,26 @@
         }
     },
     {
-        "job_uid": "5b4a67748fcb424fb59d264e26f9b0a7",
+        "job_uid": "6c1e1988b6c348859977566c05058b72",
         "info_job": {
             "target": "file_create",
-            "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/dependencies/dependent.txt'),)",
+            "args": "('ddd', 'json')",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": 20,
+            "tries": 0,
+            "dependencies": "[]"
+        },
+        "info_status": {
+            "status": "IN_PROGRESS",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "9c710bf148824d4598de8293ec2c1069",
+        "info_job": {
+            "target": "file_output",
+            "args": "('\u041f\u0440\u0438\u0432\u0435\u0442!', 'kkkk', 'json')",
             "kwargs": "{}",
             "start_at": null,
             "max_working_time": -1,
@@ -48,15 +48,15 @@
         }
     },
     {
-        "job_uid": "f662f244036c4de3aaefd543f24838db",
+        "job_uid": "d7c0d2056863411081d41879812ab46a",
         "info_job": {
-            "target": "file_output_dependencies",
-            "args": "('\u0417\u0430\u0434\u0430\u0447\u0430 \u0441 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u044f\u043c\u0438 \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0430!',)",
+            "target": "dir_create",
+            "args": "('folder',)",
             "kwargs": "{}",
             "start_at": null,
             "max_working_time": -1,
             "tries": 0,
-            "dependencies": "[<app.job.Job object at 0x7f7aae203bb0>, <app.job.Job object at 0x7f7aae203df0>]"
+            "dependencies": "[]"
         },
         "info_status": {
             "status": "END",
@@ -64,10 +64,58 @@
         }
     },
     {
-        "job_uid": "dc331fdae8374f60a602035ba63d6369",
+        "job_uid": "c1ea6db36afd49f3b1f654a14a5b0859",
         "info_job": {
-            "target": "dir_create",
-            "args": "('dependencies',)",
+            "target": "dir_rename",
+            "args": "('folder', 'new_folder')",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": "[]"
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "b8d7444d9e1d43879f5ed87d33964f86",
+        "info_job": {
+            "target": "dir_delete",
+            "args": "('new_folder',)",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": "[]"
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "0a9488989826414f8eab1e372123c05c",
+        "info_job": {
+            "target": "get_request",
+            "args": "('https://code.s3.yandex.net/async-module/moscow-response.json',)",
+            "kwargs": "{}",
+            "start_at": null,
+            "max_working_time": -1,
+            "tries": 0,
+            "dependencies": "[]"
+        },
+        "info_status": {
+            "status": "END",
+            "current_tries": 1
+        }
+    },
+    {
+        "job_uid": "f7cf14ba3fed47eab401999897e1642c",
+        "info_job": {
+            "target": "file_delete",
+            "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/external/outputs/ddd.json'),)",
             "kwargs": "{}",
             "start_at": null,
             "max_working_time": -1,
@@ -80,23 +128,7 @@
         }
     },
     {
-        "job_uid": "aababb01ba8d42a4aa88d409588e29f1",
-        "info_job": {
-            "target": "file_create",
-            "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/dependencies/dependent.txt'),)",
-            "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[]"
-        },
-        "info_status": {
-            "status": "END",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "39d85ec08c7c488f80fa33c01cd29c0e",
+        "job_uid": "7383c4311fcd4c668161817083ad32e5",
         "info_job": {
             "target": "file_output_dependencies",
             "args": "('\u0417\u0430\u0434\u0430\u0447\u0430 \u0441 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u044f\u043c\u0438 \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0430!',)",
@@ -104,7 +136,7 @@
             "start_at": null,
             "max_working_time": -1,
             "tries": 0,
-            "dependencies": "[<app.job.Job object at 0x7f8e6b2cfd30>, <app.job.Job object at 0x7f8e6b2cff70>]"
+            "dependencies": "[<app.job.Job object at 0x7efcf913f250>, <app.job.Job object at 0x7efcf913f010>]"
         },
         "info_status": {
             "status": "END",
@@ -112,7 +144,7 @@
         }
     },
     {
-        "job_uid": "f201a6e0e694426ebb3ec7f7499386aa",
+        "job_uid": "a382395121de4178a8e9744d5087955f",
         "info_job": {
             "target": "dir_create",
             "args": "('dependencies',)",
@@ -123,108 +155,12 @@
             "dependencies": "[]"
         },
         "info_status": {
-            "status": "ABORTED",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "f5d32a95f8804e54ba806b7d5fe7bbf0",
-        "info_job": {
-            "target": "file_create",
-            "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/dependencies/dependent.txt'),)",
-            "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[]"
-        },
-        "info_status": {
             "status": "END",
             "current_tries": 1
         }
     },
     {
-        "job_uid": "e7390e9dc4c34129b70c19e7aa50cc00",
-        "info_job": {
-            "target": "file_output_dependencies",
-            "args": "('\u0417\u0430\u0434\u0430\u0447\u0430 \u0441 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u044f\u043c\u0438 \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0430!',)",
-            "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[<app.job.Job object at 0x7fe299dbb2e0>, <app.job.Job object at 0x7fe299dbb520>]"
-        },
-        "info_status": {
-            "status": "END",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "fe662fff08264c238f8362664fc2cf6d",
-        "info_job": {
-            "target": "dir_create",
-            "args": "('dependencies',)",
-            "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[]"
-        },
-        "info_status": {
-            "status": "ABORTED",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "d92eb29170194abc9442f0dba316538a",
-        "info_job": {
-            "target": "file_create",
-            "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/dependencies/dependent.txt'),)",
-            "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[]"
-        },
-        "info_status": {
-            "status": "END",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "dc63fe4e7cde4c2a945c951fa0c472b1",
-        "info_job": {
-            "target": "file_output_dependencies",
-            "args": "('\u0417\u0430\u0434\u0430\u0447\u0430 \u0441 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u044f\u043c\u0438 \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0430!',)",
-            "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[<app.job.Job object at 0x7fd24ae9d720>, <app.job.Job object at 0x7fd24ae9d960>]"
-        },
-        "info_status": {
-            "status": "END",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "10e6975811d541f5b3edee3d986c8c54",
-        "info_job": {
-            "target": "dir_create",
-            "args": "('dependencies',)",
-            "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": -1,
-            "tries": 0,
-            "dependencies": "[]"
-        },
-        "info_status": {
-            "status": "ABORTED",
-            "current_tries": 1
-        }
-    },
-    {
-        "job_uid": "3a460d6535714765993ef64ff97a2517",
+        "job_uid": "4f5b59b7fe3c45e79d0a003cf171a1bf",
         "info_job": {
             "target": "file_create",
             "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/dependencies/dependent.txt'),)",

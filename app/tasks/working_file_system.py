@@ -89,7 +89,7 @@ class WorkingFileSystem():
     def file_create(self, name: str, file_type: str) -> Generator[None, Any, Any]:
         """Создание файла"""
         job_uid = yield
-        time.sleep(20)
+        time.sleep(5)
         OUTPUT_FILES_DIR.mkdir(exist_ok=True)
         file_name = f'{name}.{file_type}'
         file_path = OUTPUT_FILES_DIR / file_name

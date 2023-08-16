@@ -1,4 +1,3 @@
-import json
 import os
 from app.scheduler import Scheduler
 from app.constants import MAX_WORKERS
