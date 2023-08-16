@@ -1,7 +1,8 @@
 import json
-from app.job import Job
-from app.constants import FILE_STATUS_LOG
 from threading import Lock
+
+from app.constants import FILE_STATUS_LOG
+from app.job import Job
 
 
 class RecordStatusLog:
@@ -20,7 +21,7 @@ class RecordStatusLog:
                 "target": task.target.__name__,
                 "args": str(task.args),
                 "kwargs": str(task.kwargs),
-                "start_at": task.start_at,
+                "start_at": str(task.start_at),
                 "max_working_time": task.max_working_time,
                 "tries": task.tries,
                 "dependencies": str(task.dependencies)
@@ -46,6 +47,7 @@ class RecordStatusLog:
         self.lock.release()
 
     def read_status_log(self):
+        """Чтение журнала текущего состояния"""
         self.lock.acquire()
         with open(FILE_STATUS_LOG, 'r', encoding='utf-8') as file:
             status_log = json.load(file)
@@ -93,7 +95,7 @@ class RecordStatusLog:
             "target": job.target.__name__,
             "args": str(job.args),
             "kwargs": str(job.kwargs),
-            "start_at": job.start_at,
+            "start_at": str(job.start_at),
             "max_working_time": job.max_working_time,
             "tries": job.tries,
             "dependencies": str(job.dependencies)

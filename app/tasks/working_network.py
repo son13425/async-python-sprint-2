@@ -1,15 +1,13 @@
-from app.utils.decorator import coroutine
-from urllib.request import urlopen
-from http import HTTPStatus
-import json
-from app.loggs.logger import logger
-from app.constants import (
-    DATETIME_FORMAT,
-    OUTPUT_FILES_DIR
-)
 import datetime as dt
-from app.log_status.log_status import record_status_log
+import json
+from http import HTTPStatus
 from typing import Any, Generator
+from urllib.request import urlopen
+
+from app.constants import DATETIME_FORMAT, OUTPUT_FILES_DIR
+from app.log_status.log_status import record_status_log
+from app.loggs.logger import logger
+from app.utils.decorator import coroutine
 
 
 class WorkingNetwork():
@@ -41,7 +39,7 @@ class WorkingNetwork():
                         f'"{self.get_request.__doc__}" выполнена. '
                         'Данные отправлены на обработку'
                     )
-                    output.send((job_uid, data)) # type: ignore
+                    output.send((job_uid, data))   # type: ignore
                     output.close()
             else:
                 record_status_log.overwrite_job_status(

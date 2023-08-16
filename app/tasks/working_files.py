@@ -1,17 +1,13 @@
 import datetime as dt
 import os.path
 import time
-from typing import Any, Generator, Optional
 from pathlib import Path
+from typing import Any, Generator
 
-from app.constants import (
-    DATETIME_FORMAT,
-    OUTPUT_FILES_DIR,
-    URL_DEPENDENT
-)
+from app.constants import DATETIME_FORMAT, OUTPUT_FILES_DIR, URL_DEPENDENT
+from app.log_status.log_status import record_status_log
 from app.loggs.logger import logger
 from app.utils.decorator import coroutine
-from app.log_status.log_status import record_status_log
 
 
 class WorkingFiles():
@@ -75,15 +71,19 @@ class WorkingFiles():
         )
 
     @coroutine
-    def file_output_dependencies(self, text: str) -> Generator[None, Any, Any]:
+    def file_output_dependencies(
+        self,
+        text: str
+    ) -> Generator[None, Any, Any]:
         """Вывод информации о зависимостях в файл"""
-        job_uid = yield # type: ignore
+        job_uid = yield   # type: ignore
         file_path = URL_DEPENDENT
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(text + '\n')
         record_status_log.overwrite_job_status(job_uid, 'END')
         logger.info(
-            f'Задача {job_uid} - "{self.file_output_dependencies.__doc__}" выполнена'
+            f'Задача {job_uid} - "{self.file_output_dependencies.__doc__}" '
+            'выполнена'
         )
 
 

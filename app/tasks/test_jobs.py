@@ -1,32 +1,22 @@
-from app.job import Job
-from app.tasks.working_files import (
-    working_file
-)
-from app.tasks.working_file_system import work_file_system
-from app.tasks.working_network import working_network
-from time import perf_counter
-from app.constants import (
-    DIR_NAME_FIRST,
-    DIR_NAME_RENAME,
-    FILE_FOR_READ,
-    URL_FOR_PARSING,
-    OUTPUT_FILES_DIR,
-    TEXT_DEPENDENT,
-    DIR_NAME_DEPENDENCIES,
-    URL_DEPENDENT
-)
-import datetime
+from datetime import datetime, timedelta
 
+from app.constants import (DIR_NAME_DEPENDENCIES, DIR_NAME_FIRST,
+                           DIR_NAME_RENAME, FILE_FOR_READ, OUTPUT_FILES_DIR,
+                           TEXT_DEPENDENT, URL_DEPENDENT, URL_FOR_PARSING)
+from app.job import Job
+from app.tasks.working_file_system import work_file_system
+from app.tasks.working_files import working_file
+from app.tasks.working_network import working_network
 
 job1 = Job(
     target=working_file.file_read,
     args=(FILE_FOR_READ, ),
-    start_at=perf_counter() + 30 # type: ignore
+    start_at=datetime.now() + timedelta(seconds=30)
 )
 job2 = Job(
     target=work_file_system.file_create,
     args=('ddd', 'json'),
-    max_working_time=20
+    max_working_time=2
 )
 job3 = Job(
     target=working_file.file_output,
@@ -67,6 +57,3 @@ job11 = Job(
 )
 
 list_jobs = [job1, job2, job3, job4, job5, job6, job7, job8, job11]
-
-
-# job2, job3, job4, job5, job6, job7, job8,

@@ -1,15 +1,15 @@
-from queue import Queue
-from threading import Condition, Thread, Timer, Event
-from typing import List
-from app.job import Job
-from app.loggs.logger import logger
-from time import perf_counter
-from app.log_status.log_status import record_status_log
 import concurrent.futures as pool
-from app.constants import FILE_STATUS_LOG
 from concurrent.futures import ThreadPoolExecutor
-from time import sleep
+from datetime import datetime
 from multiprocessing import Process
+from queue import Queue
+from threading import Condition, Thread
+from time import sleep
+from typing import List
+
+from app.job import Job
+from app.log_status.log_status import record_status_log
+from app.loggs.logger import logger
 
 
 class Scheduler:
@@ -19,9 +19,10 @@ class Scheduler:
         self.pool_size: int = pool_size
 
     def schedule(self, task: Job) -> bool:
+        """Планирование задачи по времени"""
         record_status_log.overwrite_job_status(task.job_uid, 'START')
         condition = Condition()
-        work_list = []
+        work_list: List[bool] = []
         with condition:
             Thread(
                 target=self.is_time,
@@ -42,6 +43,7 @@ class Scheduler:
         return True
 
     def run(self) -> None:
+        """Выполнение задачи"""
         while not self.__queue.empty():
             job = self.__queue.get()
             logger.info(
@@ -56,49 +58,42 @@ class Scheduler:
                     process = Process(target=self.work, args=(job, ))
                     process.start()
                     sleep(job.max_working_time)
-                    if process.is_alive():
-                        #print(process.is_alive())
-                        process.terminate()
-                        # record_status_log.overwrite_job_status(
-                        #     job.job_uid,
-                        #     'ABORTED'
-                        # )
-                        # logger.error(
-                        #     f'Задача {job.job_uid} - '
-                        #     f'"{job.target.__doc__}" прервана: '
-                        #     'время выполнения задачи истекло'
-                        # )
+                    process.terminate()
 
     def work(self, job: Job):
-            if len(job.dependencies) == 0: # type: ignore
-                try:
-                    job.run()
-                except StopIteration:
-                    return
-            else:
-                condition = Condition()
-                dependencies_list = []
-                Thread(
-                    target=self.is_dependencies,
-                    args=(job, condition, dependencies_list)
-                ).start()
-                with condition:
-                    condition.wait_for(
-                        lambda: len(dependencies_list) == len(job.dependencies) # type: ignore
+        """Обработчик"""
+        if len(job.dependencies) == 0:  # type: ignore
+            try:
+                job.run()
+            except StopIteration:
+                return
+        else:
+            condition = Condition()
+            dependencies_list: List[bool] = []
+            Thread(
+                target=self.is_dependencies,
+                args=(job, condition, dependencies_list)
+            ).start()
+            with condition:
+                condition.wait_for(
+                    lambda: len(dependencies_list) == len(
+                        job.dependencies  # type: ignore
                     )
-                    if all(dependencies_list):
-                        try:
-                            job.run()
-                        except StopIteration:
-                            return
-                    else:
-                        record_status_log.overwrite_job_status(
-                            job.job_uid,
-                            'ABORTED'
-                        )
-                        self.restart(job)
+                )
+                if all(dependencies_list):
+                    try:
+                        job.run()
+                    except StopIteration:
+                        return
+                else:
+                    record_status_log.overwrite_job_status(
+                        job.job_uid,
+                        'ABORTED'
+                    )
+                    self.restart(job)
 
     def restart(self, task: Job):
+        """Обработка рестарта"""
         data = record_status_log.read_status_log()
         for job in data:
             if job['job_uid'] == task.job_uid:
@@ -126,12 +121,15 @@ class Scheduler:
                 continue
 
     def is_time(
-            self, task: Job, condition: Condition, work_list: List
+        self, task: Job, condition: Condition, work_list: List
     ) -> None:
-        time_current = perf_counter()
+        """Обработка времени запуска"""
+        time_current: datetime = datetime.now()
         if task.start_at is None:
             work_list.append(True)
-        elif task.start_at is not None and time_current > task.start_at: # type: ignore
+        elif task.start_at is not None and (
+            time_current > task.start_at
+        ):
             record_status_log.overwrite_job_status(
                 task.job_uid,
                 'ABORTED'
@@ -142,8 +140,12 @@ class Scheduler:
             )
             work_list.append(False)
         else:
-            if task.start_at is not None and time_current < task.start_at: # type: ignore
-                time_pause = round(task.start_at - time_current, 0) # type: ignore
+            if task.start_at is not None and time_current < (
+                task.start_at
+            ):
+                time_pause = round(
+                    (task.start_at - time_current).seconds, 0
+                )
                 record_status_log.overwrite_job_status(
                     task.job_uid,
                     'PAUSE'
@@ -160,14 +162,17 @@ class Scheduler:
     def is_dependencies(
         self, task: Job, condition: Condition, dependencies_list: list
     ) -> None:
-        for job in task.dependencies: # type: ignore
+        """Обработка зависимостей"""
+        for job in task.dependencies:  # type: ignore
             record_status_log.record_job_status_log(job)
         with condition:
             with pool.ThreadPoolExecutor(
                 max_workers=self.pool_size
             ) as executor:
                 futures = (
-                    [executor.submit(self.schedule, work) for work in task.dependencies] # type: ignore
+                    [executor.submit(
+                        self.schedule, work
+                    ) for work in task.dependencies]  # type: ignore
                 )
                 for future in pool.as_completed(futures):
                     result = future.result()

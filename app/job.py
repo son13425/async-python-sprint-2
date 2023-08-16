@@ -1,7 +1,7 @@
-from uuid import uuid4
 import time
 from datetime import datetime
-from typing import Optional, List, Callable
+from typing import Callable, List, Optional
+from uuid import uuid4
 
 
 class Job:
@@ -9,8 +9,8 @@ class Job:
     def __init__(
         self,
         target: Callable,
-        args: tuple = None, # type: ignore
-        kwargs: dict = None, # type: ignore
+        args: tuple = None,  # type: ignore
+        kwargs: dict = None,  # type: ignore
         job_uid: Optional[str] = None,
         start_at: Optional[datetime] = None,      # время запуска
         max_working_time: int = -1,               # длительность выполнения

@@ -1,20 +1,16 @@
 import os
-from app.scheduler import Scheduler
-from app.constants import MAX_WORKERS
-from app.tasks.test_jobs import list_jobs
-from time import perf_counter
-from app.loggs.logger import logger
 from concurrent.futures import ThreadPoolExecutor
+from time import perf_counter
+
+from app.constants import FILE_STATUS_LOG, MAX_WORKERS
 from app.log_status.log_status import record_status_log
-
-from app.constants import FILE_STATUS_LOG
-
+from app.loggs.logger import logger
+from app.scheduler import Scheduler
+from app.tasks.test_jobs import list_jobs
 
 start = perf_counter()
 logger.info('Старт планировщика')
-print('Старт планировщика')
 
-threads = []
 threads_max = MAX_WORKERS
 loop = Scheduler(MAX_WORKERS)
 
@@ -72,7 +68,7 @@ with ThreadPoolExecutor(max_workers=threads_max) as pool:
                         )
                 else:
                     continue
-            if in_status_log == False:
+            if in_status_log is False:
                 record_status_log.record_job_status_log(job)
                 logger.info(
                     f'Задача {job.job_uid} - "{job.target.__doc__}" '
@@ -90,10 +86,6 @@ with ThreadPoolExecutor(max_workers=threads_max) as pool:
 
 
 finish = perf_counter()
-print(
-    'Валидные задачи выполнены успешно. '
-    f'Выполнение заняло {round(finish-start, 4)} сек.'
-)
 logger.info(
     'Валидные задачи выполнены успешно. '
     f'Выполнение заняло {round(finish-start, 4)} сек.'

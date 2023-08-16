@@ -1,8 +1,10 @@
 from functools import wraps
+
 from app.loggs.logger import logger
 
 
 def coroutine(f):
+    """Запуск корутины"""
     @wraps(f)
     def wrap(*args, **kwargs):
         try:

@@ -2,12 +2,7 @@ import logging
 from time import perf_counter
 from types import FunctionType, MethodType
 
-from app.constants import (
-    FORMAT_LOGGER,
-    DATETIME_FORMAT,
-    FILE_LOGGER
-)
-
+from app.constants import DATETIME_FORMAT, FILE_LOGGER, FORMAT_LOGGER
 
 logging.basicConfig(
     format=FORMAT_LOGGER,

@@ -1,14 +1,12 @@
-from app.utils.decorator import coroutine
-from app.loggs.logger import logger
-from app.constants import BASE_DIR
-from pathlib import Path
-import time
 import os
-from app.constants import (
-    OUTPUT_FILES_DIR
-)
-from app.log_status.log_status import record_status_log
+import time
+from pathlib import Path
 from typing import Any, Generator
+
+from app.constants import BASE_DIR, OUTPUT_FILES_DIR
+from app.log_status.log_status import record_status_log
+from app.loggs.logger import logger
+from app.utils.decorator import coroutine
 
 
 class WorkingFileSystem():
@@ -38,7 +36,11 @@ class WorkingFileSystem():
         return True
 
     @coroutine
-    def dir_rename(self, dir_name: str, new_dir_name: str) -> Generator[None, Any, Any]:
+    def dir_rename(
+        self,
+        dir_name: str,
+        new_dir_name: str
+    ) -> Generator[None, Any, Any]:
         """Переименование директории"""
         job_uid = yield
         time.sleep(5)
@@ -86,7 +88,11 @@ class WorkingFileSystem():
             )
 
     @coroutine
-    def file_create(self, name: str, file_type: str) -> Generator[None, Any, Any]:
+    def file_create(
+        self,
+        name: str,
+        file_type: str
+    ) -> Generator[None, Any, Any]:
         """Создание файла"""
         job_uid = yield
         time.sleep(5)

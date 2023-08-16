@@ -1,11 +1,11 @@
 [
     {
-        "job_uid": "ebae7abdaa89433fa54b4d9a05c00322",
+        "job_uid": "767b3ff741284721bd6bc0053dd9247f",
         "info_job": {
             "target": "file_read",
             "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/external/example_text_file.txt'),)",
             "kwargs": "{}",
-            "start_at": 17875.846905751,
+            "start_at": "2023-08-16 16:03:17.712655",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -16,13 +16,13 @@
         }
     },
     {
-        "job_uid": "6c1e1988b6c348859977566c05058b72",
+        "job_uid": "3f153de8cda54e55b5f9833b215f525c",
         "info_job": {
             "target": "file_create",
             "args": "('ddd', 'json')",
             "kwargs": "{}",
-            "start_at": null,
-            "max_working_time": 20,
+            "start_at": "None",
+            "max_working_time": 2,
             "tries": 0,
             "dependencies": "[]"
         },
@@ -32,12 +32,12 @@
         }
     },
     {
-        "job_uid": "9c710bf148824d4598de8293ec2c1069",
+        "job_uid": "04ff6306e88e4ad8828a6cfda38b83cc",
         "info_job": {
             "target": "file_output",
             "args": "('\u041f\u0440\u0438\u0432\u0435\u0442!', 'kkkk', 'json')",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -48,12 +48,12 @@
         }
     },
     {
-        "job_uid": "d7c0d2056863411081d41879812ab46a",
+        "job_uid": "ce5ae3459b57412ab7985a76a4e89efd",
         "info_job": {
             "target": "dir_create",
             "args": "('folder',)",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -64,12 +64,12 @@
         }
     },
     {
-        "job_uid": "c1ea6db36afd49f3b1f654a14a5b0859",
+        "job_uid": "26f093e3681d46e48b8ac3e8c421b65a",
         "info_job": {
             "target": "dir_rename",
             "args": "('folder', 'new_folder')",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -80,12 +80,12 @@
         }
     },
     {
-        "job_uid": "b8d7444d9e1d43879f5ed87d33964f86",
+        "job_uid": "945da3a4f18d4b88b65f01c2ed81e539",
         "info_job": {
             "target": "dir_delete",
             "args": "('new_folder',)",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -96,12 +96,12 @@
         }
     },
     {
-        "job_uid": "0a9488989826414f8eab1e372123c05c",
+        "job_uid": "e76d10cad3e449dda9699dd8b2c57f47",
         "info_job": {
             "target": "get_request",
             "args": "('https://code.s3.yandex.net/async-module/moscow-response.json',)",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -112,12 +112,12 @@
         }
     },
     {
-        "job_uid": "f7cf14ba3fed47eab401999897e1642c",
+        "job_uid": "77c3a5b2b9ce4690ac4127923d6f1a29",
         "info_job": {
             "target": "file_delete",
             "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/external/outputs/ddd.json'),)",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -128,15 +128,15 @@
         }
     },
     {
-        "job_uid": "7383c4311fcd4c668161817083ad32e5",
+        "job_uid": "ea3b57b2435a477984ef2ce883f62c29",
         "info_job": {
             "target": "file_output_dependencies",
             "args": "('\u0417\u0430\u0434\u0430\u0447\u0430 \u0441 \u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e\u0441\u0442\u044f\u043c\u0438 \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0430!',)",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
-            "dependencies": "[<app.job.Job object at 0x7efcf913f250>, <app.job.Job object at 0x7efcf913f010>]"
+            "dependencies": "[<app.job.Job object at 0x7ff5ed1b5ae0>, <app.job.Job object at 0x7ff5ed1b5a80>]"
         },
         "info_status": {
             "status": "END",
@@ -144,12 +144,12 @@
         }
     },
     {
-        "job_uid": "a382395121de4178a8e9744d5087955f",
+        "job_uid": "0a31b3b4dda842b8b32f5eb207e935ed",
         "info_job": {
             "target": "dir_create",
             "args": "('dependencies',)",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"
@@ -160,12 +160,12 @@
         }
     },
     {
-        "job_uid": "4f5b59b7fe3c45e79d0a003cf171a1bf",
+        "job_uid": "8a0c0bbce2c74774afef222a08edb166",
         "info_job": {
             "target": "file_create",
             "args": "(PosixPath('/home/oksana/hlam/async-python-sprint-2/app/dependencies/dependent.txt'),)",
             "kwargs": "{}",
-            "start_at": null,
+            "start_at": "None",
             "max_working_time": -1,
             "tries": 0,
             "dependencies": "[]"

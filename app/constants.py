@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 # количество одновременно обрабатываемых задач
 MAX_WORKERS = 10
 
