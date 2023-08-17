@@ -20,7 +20,7 @@ class WorkingFiles():
         file_path.touch(exist_ok=True)
         record_status_log.overwrite_job_status(job_uid, 'END')
         logger.info(
-            f'Задача {job_uid} - "Зависимость "{self.file_create.__doc__}" '
+            f'Задача {job_uid} - "Зависимость "{self.file_create.__doc__}"" '
             'выполнена'
         )
 

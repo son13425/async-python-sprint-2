@@ -14,6 +14,8 @@ logging.basicConfig(
 logger = logging.getLogger('Планировщик')
 
 
+# TO DO
+
 def notify(func, *args, **kwargs):
     """
     Логгирует начало и конец выполнения исходной функции

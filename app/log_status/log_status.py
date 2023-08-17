@@ -16,19 +16,19 @@ class RecordStatusLog:
         """
         self.lock.acquire()
         data = {
-            "job_uid": task.job_uid,
-            "info_job": {
-                "target": task.target.__name__,
-                "args": str(task.args),
-                "kwargs": str(task.kwargs),
-                "start_at": str(task.start_at),
-                "max_working_time": task.max_working_time,
-                "tries": task.tries,
-                "dependencies": str(task.dependencies)
+            'job_uid': task.job_uid,
+            'info_job': {
+                'target': task.target.__name__,
+                'args': str(task.args),
+                'kwargs': str(task.kwargs),
+                'start_at': str(task.start_at),
+                'max_working_time': task.max_working_time,
+                'tries': task.tries,
+                'dependencies': str(task.dependencies)
             },
-            "info_status": {
-                "status": "CREATED",
-                "current_tries": 1
+            'info_status': {
+                'status': 'CREATED',
+                'current_tries': 1
             }
         }
         with open(FILE_STATUS_LOG, 'r+', encoding='utf-8') as file:
@@ -92,13 +92,13 @@ class RecordStatusLog:
         в словарь
         """
         data = {
-            "target": job.target.__name__,
-            "args": str(job.args),
-            "kwargs": str(job.kwargs),
-            "start_at": str(job.start_at),
-            "max_working_time": job.max_working_time,
-            "tries": job.tries,
-            "dependencies": str(job.dependencies)
+            'target': job.target.__name__,
+            'args': str(job.args),
+            'kwargs': str(job.kwargs),
+            'start_at': str(job.start_at),
+            'max_working_time': job.max_working_time,
+            'tries': job.tries,
+            'dependencies': str(job.dependencies)
         }
         return data
 

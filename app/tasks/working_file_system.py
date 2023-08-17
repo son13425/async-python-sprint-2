@@ -22,7 +22,7 @@ class WorkingFileSystem():
                 'ABORTED'
             )
             logger.error(
-                f'Задача {job_uid} - "{self.dir_create.__doc__} "{dir_name}" '
+                f'Задача {job_uid} - "{self.dir_create.__doc__}" "{dir_name}" '
                 f'прервана: директория с именем "{dir_name}" уже существует'
             )
         else:
@@ -50,7 +50,7 @@ class WorkingFileSystem():
                 'ABORTED'
             )
             logger.error(
-                f'Задача {job_uid} - "{self.dir_rename.__doc__} "{dir_name}" '
+                f'Задача {job_uid} - "{self.dir_rename.__doc__}" "{dir_name}" '
                 f'прервана: директория с именем "{new_dir_name}" уже '
                 'существует'
             )
@@ -60,7 +60,7 @@ class WorkingFileSystem():
             path.rename(path_new)
             record_status_log.overwrite_job_status(job_uid, 'END')
             logger.info(
-                f'Задача {job_uid} - "{self.dir_rename.__doc__} "{dir_name}" '
+                f'Задача {job_uid} - "{self.dir_rename.__doc__}" "{dir_name}" '
                 f'в "{new_dir_name}" выполнена'
             )
 
@@ -75,7 +75,7 @@ class WorkingFileSystem():
                 'ABORTED'
             )
             logger.error(
-                f'Задача {job_uid} - "{self.dir_delete.__doc__} "{dir_name}" '
+                f'Задача {job_uid} - "{self.dir_delete.__doc__}" "{dir_name}" '
                 f'прервана: директория с именем "{dir_name}" не найдена'
             )
         else:
@@ -83,7 +83,7 @@ class WorkingFileSystem():
             path.rmdir()
             record_status_log.overwrite_job_status(job_uid, 'END')
             logger.info(
-                f'Задача {job_uid} - "{self.dir_delete.__doc__} "{dir_name}" '
+                f'Задача {job_uid} - "{self.dir_delete.__doc__}" "{dir_name}" '
                 'выполнена'
             )
 

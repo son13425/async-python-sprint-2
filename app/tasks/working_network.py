@@ -20,7 +20,7 @@ class WorkingNetwork():
         job_uid = yield
         with urlopen(url) as response:
             if response.status == HTTPStatus.OK:
-                resp_body = response.read().decode("utf-8")
+                resp_body = response.read().decode('utf-8')
                 if resp_body:
                     try:
                         data = json.loads(resp_body)
