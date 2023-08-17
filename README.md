@@ -77,7 +77,7 @@ python3 main.py
 Тестировать приложение:
 
 ```
-python3 -m external.tests.test
+python3 -m app.tests.test
 ```
 
 ### Автор.
