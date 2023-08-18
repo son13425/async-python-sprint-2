@@ -7,6 +7,7 @@ from threading import Condition, Thread
 from time import sleep
 from typing import List
 
+from app.constants import FILE_STATUS_LOG
 from app.job import Job
 from app.log_status.log_status import record_status_log
 from app.loggs.logger import logger
@@ -62,6 +63,8 @@ class Scheduler:
 
     def work(self, job: Job):
         """Обработчик"""
+        if job.dependencies is None:
+            job.dependencies = []
         if len(job.dependencies) == 0:  # type: ignore
             try:
                 job.run()
@@ -94,7 +97,7 @@ class Scheduler:
 
     def restart(self, task: Job):
         """Обработка рестарта"""
-        data = record_status_log.read_status_log()
+        data = record_status_log.read_status_log(FILE_STATUS_LOG)
         for job in data:
             if job['job_uid'] == task.job_uid:
                 if job['info_status']['current_tries'] < (

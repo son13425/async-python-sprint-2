@@ -3,7 +3,7 @@ from pathlib import Path
 from app.job import Job
 from app.tasks.working_file_system import work_file_system
 
-FILE_EXAMPLE = Path(__file__).parent / 'tests' / 'file_example.json'
+FILE_EXAMPLE = Path(__file__).parent / 'file_example.json'
 
 file_example_content = [
     {
@@ -24,6 +24,7 @@ file_example_content = [
     }
 ]
 
+
 job_example = Job(
     target=work_file_system.file_create,
     args=('example', 'json'),
@@ -32,10 +33,20 @@ job_example = Job(
 
 data = {
     "target": "file_create",
+    "args": "('example', 'json')",
+    "kwargs": "{}",
+    "start_at": "None",
+    "max_working_time": 2,
+    "tries": 0,
+    "dependencies": "None"
+}
+
+data_error = {
+    "target": "file_create",
     "args": "('ddd', 'json')",
     "kwargs": "{}",
     "start_at": "None",
     "max_working_time": 2,
     "tries": 0,
-    "dependencies": "[]"
+    "dependencies": "None"
 }

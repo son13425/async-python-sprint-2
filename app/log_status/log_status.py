@@ -46,11 +46,12 @@ class RecordStatusLog:
                 file.write('\n' + ']')
         self.lock.release()
 
-    def read_status_log(self):
+    def read_status_log(self, url):
         """Чтение журнала текущего состояния"""
         self.lock.acquire()
-        with open(FILE_STATUS_LOG, 'r', encoding='utf-8') as file:
+        with open(url, 'r', encoding='utf-8') as file:
             status_log = json.load(file)
+            print(status_log)
         self.lock.release()
         return status_log
 
